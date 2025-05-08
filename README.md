@@ -1,0 +1,1 @@
+🚀 A practice repository for Playwright automation testing. This repo contains test scripts, best practices, and experiments with Playwright for end-to-end (E2E) web automation. Perfect for learning and refining automation skills!
