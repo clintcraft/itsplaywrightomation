@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    // Use the latest JavaScript features like async/await and optional chaining
+    "target": "ESNext",
+    // Use CommonJS for Node.js compatibility (Playwright runs in Node)
+    "module": "CommonJS",
+    // Include modern JavaScript and browser DOM APIs (like `fetch`, `document`, etc.)
+    "lib": ["ESNext", "DOM"],
+    // Enable all strict type-checking options (recommended for catching bugs early)
+    "strict": true,
+    // Allow default imports from CommonJS modules (like fs, path, etc.)
+    "esModuleInterop": true,
+    // Properly resolve Node-style modules
+    "moduleResolution": "node",
+    // Allow importing `.json` files (useful for test data/configs)
+    "resolveJsonModule": true,
+    // Allow using JavaScript files in your project alongside TypeScript
+    "allowJs": true,
+    // Skip checking `.js` files (since we only want TS errors)
+    "checkJs": false,
+    // Base folder for resolving non-relative imports (e.g., @pages/LoginPage)
+    "baseUrl": ".",
+
+    // Custom path aliases for cleaner and organized imports
+    "paths": {
+      "@pages/*": ["pages/*"],
+      "@data/*": ["Data/*"],
+      "@tests/*": ["tests/*"]
+    },
+
+    // Output folder for compiled `.js` files (only used if you run `tsc`)
+    "outDir": "dist",  // Optional if you're compiling manually
+    // Skip type-checking third-party libraries in node_modules for speed
+    "skipLibCheck": true
+  },
+
+   // Include these files/folders in the compilation
+  "include": [
+    "pages/**/*.ts",
+    "tests/**/*.ts",
+    "globalSetup.ts",
+    "globalTeardown.ts",
+    "playwright.config.ts"
+  ],
+
+  // Always exclude node_modules and the compiled output folder
+  "exclude": ["node_modules", "dist"]
+}

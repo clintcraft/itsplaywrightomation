@@ -24,14 +24,14 @@ export const NewCustomerLocators = {
     RETURNING_CUSTOMER_SUBTITLE: "//strong[normalize-space(text())='I am a returning customer']",
   
     // Input fields
-    EMAIL_PLACEHOLDER: "input[name='email']", // or "input[placeholder='E-Mail Address']" if you want to use placeholder
-    PASSWORD_PLACEHOLDER: "input[type='password']", // or "input[placeholder='Password']" if you want to use placeholder
+    EMAIL_PLACEHOLDER: "input[placeholder='E-Mail Address']", // or "input[placeholder='E-Mail Address']" if you want to use placeholder
+    PASSWORD_PLACEHOLDER: "input[placeholder='Password']", // or "input[placeholder='Password']" if you want to use placeholder
   
     // Links
     FORGOT_PASSWORD_LINK: "//input[@class='form-control']/following-sibling::a[1]",
   
     // Action Buttons
-    LOGIN_BUTTON: "input[type='submit']", // or "button:has-text('Login')" if it were a button tag
+    LOGIN_BUTTON: "input[value='Login']", // or "button:has-text('Login')" if it were a button tag
   
     // Error Messages
     ERROR_MESSAGE: "div.alert.alert-danger.alert-dismissible",

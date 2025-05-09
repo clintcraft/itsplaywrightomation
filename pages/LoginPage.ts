@@ -12,8 +12,8 @@ export class LoginPage {
     // Defining variables using constructor
     constructor(public page: Page) { }
 
-    async navigateToLoginPage(baseURL): Promise<void> {
-        await this.page.goto("https://ecommerce-playground.lambdatest.io/index.php?route=account/login");
+    async navigateToLoginPage(baseURL: string): Promise<void> {
+        await this.page.goto(`${baseURL}/index.php?route=account/login`);
     };
 
     // Main login method with error handling and logging
@@ -32,14 +32,12 @@ export class LoginPage {
 
     // Fill in the email field with validation
     async enterEmail(emailAddress: string) {
-        await this.page.locator(ReturningCustomerLocators.EMAIL_PLACEHOLDER)
-            .fill(emailAddress);
+        await this.page.locator(ReturningCustomerLocators.EMAIL_PLACEHOLDER).fill(emailAddress);
     };
 
     // Fill in the password field with validation
     async enterLoginPassword(password: string) {
-        await this.page.locator(ReturningCustomerLocators.PASSWORD_PLACEHOLDER)
-            .fill(password);
+        await this.page.locator(ReturningCustomerLocators.PASSWORD_PLACEHOLDER).fill(password);
     };
 
     /**
@@ -61,7 +59,7 @@ export class LoginPage {
             // Click the button and wait for network to be idle
             await Promise.all([
                 this.page.waitForLoadState('networkidle', { timeout }),
-                loginButton.click(),
+                loginButton.filter({ hasText: 'Login' }).click(),
             ]);
 
             console.log('Login button clicked successfully ✅');

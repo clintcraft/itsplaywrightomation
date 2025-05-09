@@ -3,17 +3,25 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.52.0",
-    "@types/node": "^22.15.15",
-    "allure-playwright": "^3.2.1"
+    "@types/chrome": "^0.0.320",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.15.17",
+    "allure-commandline": "^2.34.0",
+    "allure-playwright": "^3.2.1",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
+    "adm-zip": "^0.5.16",
+    "dotenv": "^16.5.0",
     "fs-extra": "^11.3.0"
   }
 }

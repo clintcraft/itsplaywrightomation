@@ -1,6 +1,17 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
 import { testConfig } from './testconfig';
 
+let ENV: keyof typeof testConfig = (process.env.ENV as keyof typeof testConfig) || 'qa';
+ // Default to 'qa' if ENV is not set
+if (!ENV || ![`qa`, `qaApi`].includes(ENV)) {
+  console.log(`Please provide a correct environment value like "npx cross-env ENV=qa|qaApi"`);
+  process.exit();
+}
+
+ENV = `qa`;
+
+dotenv.config();
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -14,25 +25,27 @@ import { testConfig } from './testconfig';
  */
 export default defineConfig({
   testDir: './tests/E2E',
-  fullyParallel: false,   /* Run tests in files in parallel */
+  globalSetup: require.resolve(`./global-setup`),  /* Path to the global setup file */
+  globalTeardown: require.resolve(`./global-teardown`),  /* Path to the global teardown file */
+  fullyParallel: true,   /* Run tests in files in parallel */
   forbidOnly: !!process.env.CI,  /* Fail the build on CI if you accidentally left test.only in the source code. */
   retries: process.env.CI ? 2 : 0,   /* Retry on CI only */
   workers: process.env.CI ? 1 : undefined,   /* Opt out of parallel tests on CI. */
   reporter: [[`html`], /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-    ["allure-playwright",
-      {
-        outputFolder: 'my-allure-results',
-        suiteTitle: false,
-        detail: true,
-        screenshots: false,
-        videos: false,
-        // launchCommand: 'npm run allure:open',
-      }
-    ]],   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  ["allure-playwright",
+    {
+      outputFolder: 'my-allure-results',
+      suiteTitle: false,
+      detail: true,
+      screenshots: false,
+      videos: false,
+      // launchCommand: 'npm run allure:open',
+    }
+  ]],   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: testConfig.qa,
+    baseURL: testConfig[ENV], /* Picks Base Url based on User input */
     storageState: '.auth/user.json',/* Path to the storage state file */
 
     actionTimeout: 0,
@@ -49,7 +62,7 @@ export default defineConfig({
       name: 'chromium',
       use: {
         browserName: `chromium`,  // Configure the browser to use.
-        channel: `chrome`,  //Chrome Browser Config
+        channel: `chrome`, 
         baseURL: testConfig.qa,  //Picks Base Url based on User input
         storageState: '.auth/user.json',  //Path to the storage state file
         headless: false,  //Browser Mode
