@@ -32,12 +32,56 @@ export class LoginPage {
 
     // Fill in the email field with validation
     async enterEmail(emailAddress: string) {
-        await this.page.locator(ReturningCustomerLocators.EMAIL_PLACEHOLDER).fill(emailAddress);
+        try {
+            console.log(`Attempting to enter email: ${emailAddress}`);
+            const emailField = this.page.locator(ReturningCustomerLocators.EMAIL_PLACEHOLDER);
+            
+            // Wait for the element to be visible and enabled
+            await expect(emailField).toBeVisible({ timeout: LoginPageTimeouts.ELEMENT_VISIBILITY_TIMEOUT });
+            await expect(emailField).toBeEnabled({ timeout: LoginPageTimeouts.ELEMENT_VISIBILITY_TIMEOUT });
+            
+            // Clear any existing value and fill in the email
+            await emailField.clear();
+            await emailField.fill(emailAddress);
+            
+            // Verify the email was entered correctly
+            const enteredValue = await emailField.inputValue();
+            if (enteredValue !== emailAddress) {
+                throw new Error(`Email field value mismatch. Expected: ${emailAddress}, Got: ${enteredValue}`);
+            }
+            
+            console.log('Email entered successfully ✅');
+        } catch (error) {
+            console.error(`Failed to enter email: ${error}`);
+            throw new Error(`Email entry failed: ${error instanceof Error ? error.message : String(error)}`);
+        }
     };
 
     // Fill in the password field with validation
     async enterLoginPassword(password: string) {
-        await this.page.locator(ReturningCustomerLocators.PASSWORD_PLACEHOLDER).fill(password);
+        try {
+            console.log('Attempting to enter password...');
+            const passwordField = this.page.locator(ReturningCustomerLocators.PASSWORD_PLACEHOLDER);
+            
+            // Wait for the element to be visible and enabled
+            await expect(passwordField).toBeVisible({ timeout: LoginPageTimeouts.ELEMENT_VISIBILITY_TIMEOUT });
+            await expect(passwordField).toBeEnabled({ timeout: LoginPageTimeouts.ELEMENT_VISIBILITY_TIMEOUT });
+            
+            // Clear any existing value and fill in the password
+            await passwordField.clear();
+            await passwordField.fill(password);
+            
+            // Verify the password was entered correctly
+            const enteredValue = await passwordField.inputValue();
+            if (enteredValue !== password) {
+                throw new Error('Password field value mismatch');
+            }
+            
+            console.log('Password entered successfully ✅');
+        } catch (error) {
+            console.error(`Failed to enter password: ${error}`);
+            throw new Error(`Password entry failed: ${error instanceof Error ? error.message : String(error)}`);
+        }
     };
 
     /**

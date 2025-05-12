@@ -3,7 +3,6 @@ import { POManager } from "./pages/POManager";
 import { testConfig } from "./Data/login_data";
 // Removed unused import as 'TestConfig' is not exported from './testconfig'
 import fs from "fs-extra";
-import { url } from "inspector";
 
 
 // const AUTH_FILE = ".auth/user.json";
